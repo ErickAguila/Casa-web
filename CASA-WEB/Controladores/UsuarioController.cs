@@ -105,6 +105,7 @@ namespace CASA_WEB.Controladores
                 cn.Dispose();
                 objConexion = null;
                 Session["NOMBRE"] = per.nombre + " " + per.a_paterno;
+                Session["RUT"] = per.rut;
             }
             catch (Exception ex)
             {

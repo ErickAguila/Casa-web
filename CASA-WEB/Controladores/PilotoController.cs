@@ -164,5 +164,28 @@ namespace CASA_WEB.Controladores
             }
         }
 
+        public String Multa()
+        {
+            try
+            {
+                ServiciosDGAC.ServiciosDGACClient servidor = new ServiciosDGAC.ServiciosDGACClient();
+                int rutPiloto = Convert.ToInt32(Session["RUT"]);
+                bool multa = servidor.ServicioPilotoMulta(rutPiloto);
+                string respuesta = "";
+                if (multa)
+                {
+                    respuesta = "tiene multa";
+                }
+                else {
+                    respuesta = "no tiene multa";
+                }
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

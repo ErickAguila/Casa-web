@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://WS/" targetNamespace="http://WS/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ServicioAeronave" type="tns:ServicioAeronave" />
+  <xs:element name="ServicioAeronaveResponse" type="tns:ServicioAeronaveResponse" />
+  <xs:element name="ServicioPilotoExiste" type="tns:ServicioPilotoExiste" />
+  <xs:element name="ServicioPilotoExisteResponse" type="tns:ServicioPilotoExisteResponse" />
+  <xs:element name="ServicioPilotoHabilitado" type="tns:ServicioPilotoHabilitado" />
+  <xs:element name="ServicioPilotoHabilitadoResponse" type="tns:ServicioPilotoHabilitadoResponse" />
+  <xs:element name="ServicioPilotoMulta" type="tns:ServicioPilotoMulta" />
+  <xs:element name="ServicioPilotoMultaResponse" type="tns:ServicioPilotoMultaResponse" />
+  <xs:complexType name="ServicioAeronave">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="matricula" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServicioAeronaveResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServicioPilotoExiste">
+    <xs:sequence>
+      <xs:element name="rut" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServicioPilotoExisteResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServicioPilotoHabilitado">
+    <xs:sequence>
+      <xs:element name="rut" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServicioPilotoHabilitadoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServicioPilotoMulta">
+    <xs:sequence>
+      <xs:element name="rut" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ServicioPilotoMultaResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

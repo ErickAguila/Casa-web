@@ -6,3 +6,31 @@
 
 <h2>Bienvenidos al sistema Web de Halcón Software</h2>
 
+<div id="msgAlerta" class="alert alert-danger" style="display:none">
+    <strong>Alerta!</strong> El piloto tiene multas pendientes.
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            ValidarMultas();
+        })
+
+        function ValidarMultas() {
+            $.ajax({
+                type: "POST",
+                url: "/Piloto/Multa",
+                success: function (respuesta) {
+                    if (respuesta == "tiene multa") {
+                        $("#msgAlerta").show();
+                    }
+                    if (respuesta == "no tiene multa") {
+                        $("#msgAlerta").hide();
+                    }
+                }, error: function (xhr, ajaxOptions, thrownError) {
+                    swal("Error detectado!", "Error de mensaje de multas", "error");
+                }
+            });
+        }
+    </script>
+}

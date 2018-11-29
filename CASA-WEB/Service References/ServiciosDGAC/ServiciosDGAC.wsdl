@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://WS/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="ServiciosDGAC" targetNamespace="http://WS/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://localhost:14620/ServiciosDGAC/ServiciosDGAC?xsd=1" namespace="http://WS/" />
+    </xsd:schema>
+  </types>
+  <message name="ServicioAeronave">
+    <part name="parameters" element="tns:ServicioAeronave" />
+  </message>
+  <message name="ServicioAeronaveResponse">
+    <part name="parameters" element="tns:ServicioAeronaveResponse" />
+  </message>
+  <message name="ServicioPilotoHabilitado">
+    <part name="parameters" element="tns:ServicioPilotoHabilitado" />
+  </message>
+  <message name="ServicioPilotoHabilitadoResponse">
+    <part name="parameters" element="tns:ServicioPilotoHabilitadoResponse" />
+  </message>
+  <message name="ServicioPilotoExiste">
+    <part name="parameters" element="tns:ServicioPilotoExiste" />
+  </message>
+  <message name="ServicioPilotoExisteResponse">
+    <part name="parameters" element="tns:ServicioPilotoExisteResponse" />
+  </message>
+  <message name="ServicioPilotoMulta">
+    <part name="parameters" element="tns:ServicioPilotoMulta" />
+  </message>
+  <message name="ServicioPilotoMultaResponse">
+    <part name="parameters" element="tns:ServicioPilotoMultaResponse" />
+  </message>
+  <portType name="ServiciosDGAC">
+    <operation name="ServicioAeronave">
+      <input wsam:Action="http://WS/ServiciosDGAC/ServicioAeronaveRequest" message="tns:ServicioAeronave" />
+      <output wsam:Action="http://WS/ServiciosDGAC/ServicioAeronaveResponse" message="tns:ServicioAeronaveResponse" />
+    </operation>
+    <operation name="ServicioPilotoHabilitado">
+      <input wsam:Action="http://WS/ServiciosDGAC/ServicioPilotoHabilitadoRequest" message="tns:ServicioPilotoHabilitado" />
+      <output wsam:Action="http://WS/ServiciosDGAC/ServicioPilotoHabilitadoResponse" message="tns:ServicioPilotoHabilitadoResponse" />
+    </operation>
+    <operation name="ServicioPilotoExiste">
+      <input wsam:Action="http://WS/ServiciosDGAC/ServicioPilotoExisteRequest" message="tns:ServicioPilotoExiste" />
+      <output wsam:Action="http://WS/ServiciosDGAC/ServicioPilotoExisteResponse" message="tns:ServicioPilotoExisteResponse" />
+    </operation>
+    <operation name="ServicioPilotoMulta">
+      <input wsam:Action="http://WS/ServiciosDGAC/ServicioPilotoMultaRequest" message="tns:ServicioPilotoMulta" />
+      <output wsam:Action="http://WS/ServiciosDGAC/ServicioPilotoMultaResponse" message="tns:ServicioPilotoMultaResponse" />
+    </operation>
+  </portType>
+  <binding name="ServiciosDGACPortBinding" type="tns:ServiciosDGAC">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="ServicioAeronave">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ServicioPilotoHabilitado">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ServicioPilotoExiste">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ServicioPilotoMulta">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="ServiciosDGAC">
+    <port name="ServiciosDGACPort" binding="tns:ServiciosDGACPortBinding">
+      <soap:address location="http://localhost:14620/ServiciosDGAC/ServiciosDGAC" />
+    </port>
+  </service>
+</definitions>
