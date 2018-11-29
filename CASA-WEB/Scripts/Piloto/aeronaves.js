@@ -1,12 +1,17 @@
-﻿$(document).ready(function () {
-    $('#tableAeronaves').DataTable({
-        'paging': true,
-        'lengthChange': true,
-        'searching': true,
-        'ordering': true,
-        'info': true,
-        'autoWidth': true,
-        'responsive': true,
+﻿var tableAeronaves;
+$(document).ready(function () {
+    CargarDatosAeronave();
+    $.fn.dataTable.ext.errMode = 'throw'
+    tableAeronaves = $('#tableAeronaves').dataTable({
+        'bJQueryUI': true,
+        'bLengthChange': true,
+        'scrollCollapse': true,
+        'bPaginate': true,
+        'bFilter': true,
+        "paging": true,
+        "ordering": true,
+        "info": true,
+        'iDisplayLength': 10, //Paginacion
         'oLanguage': {
             "sProcessing": "Procesando...",
             "sLengthMenu": "Mostrar _MENU_ registros",
@@ -30,24 +35,42 @@
                 "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
-        }
-    })
-    ListarAeronavesDispónibles()
+        },
+        "columns": [
+            { "data": "matricula", "sClass": "text-left" },
+            { "data": "cant_horas_vuelo", "sClass": "text-left" },
+            {
+                "data": "f_inspeccion", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html("<center>" + oData.f_inspeccion.replace("T00:00:00", "") + "</center>");
+                }
+            },
+            {
+                "data": "f_aeronavegabilidad", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html("<center>" + oData.f_aeronavegabilidad.replace("T00:00:00", "") + "</center>");
+                }
+            },
+            { "data": "anio_fabricacion", "sClass": "text-center" },
+            { "data": "descrip_tipoaeronave", "sClass": "text-center" },
+            { "data": "DESCRIP_ESTADOAERONAVE", "sClass": "text-center" }
+        ]
+    });
 });
 
-function ListarAeronavesDispónibles() {
-    $("#bodyTableAeronaves").empty();
+function CargarDatosAeronave() {
     $.ajax({
         dataType: "json",
         type: "POST",
         url: "/Piloto/ListarAeronavesDisponibles",
-        success: function (resultado) {
-            $.each(resultado, function (i, item) {
-                $("#bodyTableAeronaves").append("<tr><td>" + item.matricula + "</td><td>" + item.cant_horas_vuelo + "</td><td>" + item.f_inspeccion.replace("T00:00:00", "") + "</td><td>" + item.f_aeronavegabilidad.replace("T00:00:00", "") + "</td><td>" + item.anio_fabricacion + "</td><td>" + item.descrip_tipoaeronave + "</td><td>" + item.DESCRIP_ESTADOAERONAVE + "</td></tr>");
-            });
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            swal("Error detectado!", "Error al listar las aeronaves disponibles", "error");
+        async: true,
+        success: function (result) {
+            LlenarDatosAeronave(result);
+        }, error: function (xhr, ajaxOptions, thrownError) {
+            swal("Error detectado!", "Error al cargar el listado de aronaves", "error");
         }
     });
+}
+
+function LlenarDatosAeronave(respuesta) {
+    tableAeronaves.fnClearTable();
+    tableAeronaves.fnAddData(respuesta);
 }

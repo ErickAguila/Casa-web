@@ -1,12 +1,17 @@
-﻿$(document).ready(function () {
-    $('#tableVuelos').DataTable({
-        'paging': true,
-        'lengthChange': true,
-        'searching': true,
-        'ordering': true,
-        'info': true,
-        'autoWidth': true,
-        'responsive': true,
+﻿var tableVuelos;
+$(document).ready(function () {
+    CargarDatosVuelos();
+    $.fn.dataTable.ext.errMode = 'throw'
+    tableVuelos = $('#tableVuelos').dataTable({
+        'bJQueryUI': true,
+        'bLengthChange': true,
+        'scrollCollapse': true,
+        'bPaginate': true,
+        'bFilter': true,
+        "paging": true,
+        "ordering": true,
+        "info": true,
+        'iDisplayLength': 10, //Paginacion
         'oLanguage': {
             "sProcessing": "Procesando...",
             "sLengthMenu": "Mostrar _MENU_ registros",
@@ -30,13 +35,28 @@
                 "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
-        }
-    })
-    listarVuelo();
+        },
+        "columns": [
+            { "data": "rut_piloto", "sClass": "text-left" },
+            { "data": "rut_copiloto", "sClass": "text-left" },
+            { "data": "aeronave_matricula", "sClass": "text-left" },
+            {
+                "data": "fecha_vuelo", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html("<center>" + oData.fecha_vuelo.replace("T00:00:00", "") + "</center>");
+                }
+            },
+            { "data": "condicion_vuelo", "sClass": "text-center" },
+            { "data": "cant_horas_total", "sClass": "text-center" },
+            { "data": "cant_horas_piloto", "sClass": "text-center" },
+            { "data": "cant_horas_copiloto", "sClass": "text-center" },
+            { "data": "origen", "sClass": "text-center" },
+            { "data": "destino", "sClass": "text-center" },
+            { "data": "mision", "sClass": "text-center" },
+        ]
+    });
 });
 
-function listarVuelo() {
-    $("#bodyTableVuelos").empty();
+function CargarDatosVuelos() {
     var codigoUsu = $("#codigoUsuario").text()
     $.ajax({
         type: "POST",
@@ -49,26 +69,19 @@ function listarVuelo() {
                     type: "POST",
                     url: "/Piloto/ListarVuelos",
                     data: { rutPiloto: resultado },
-                    success: function (resultado) {
-                        $.each(resultado, function (i, item) {
-                            $("#bodyTableVuelos").append("<tr><td>" + item.rut_piloto +
-                            "</td><td>" + item.rut_copiloto +
-                            "</td><td>" + item.aeronave_matricula +
-                            "</td><td>" + item.fecha_vuelo.replace("T00:00:00", "") +
-                            "</td><td>" + item.condicion_vuelo +
-                            "</td><td>" + item.cant_horas_total +
-                            "</td><td>" + item.cant_horas_piloto +
-                            "</td><td>" + item.cant_horas_copiloto +
-                            "</td><td>" + item.origen +
-                            "</td><td>" + item.destino +
-                            "</td><td>" + item.mision + "</td></tr>");
-                        });
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        swal("Error detectado!", "Error al listar los vuelos", "error");
+                    async: true,
+                    success: function (result) {
+                        LlenarDatosVuelos(result);
+                    }, error: function (xhr, ajaxOptions, thrownError) {
+                        swal("Error detectado!", "Error al cargar los vuelos", "error");
                     }
                 });
             }
         }
-    });   
+    })
+}
+
+function LlenarDatosVuelos(respuesta) {
+    tableVuelos.fnClearTable();
+    tableVuelos.fnAddData(respuesta);
 }
